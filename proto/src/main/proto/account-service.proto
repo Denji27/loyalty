@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.example.loyalty.account";
+
+message CreateAccountRequest{
+  string name = 1;
+  string phoneNumber = 2;
+  string address = 3;
+  string email = 4;
+  GENDER gender = 5;
+  bool isActive = 6;
+}
+
+message AccountDto{
+  string name = 1;
+  string address = 2;
+  string phoneNumber = 3;
+  string email =4;
+}
+
+enum GENDER{
+  MALE = 0;
+  FEMALE = 1;
+}
+
+service AccountService{
+  rpc createAccount(CreateAccountRequest) returns (AccountDto);
+}
