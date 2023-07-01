@@ -19,21 +19,48 @@ public class CreateAccountBusiness implements ICreateAccount{
 
     @Override
     public CreateResponse createAccount(CreateRequest request) {
-        CreateAccountRequest createAccountRequest = CreateAccountRequest.newBuilder()
-                .setName(request.getName())
-                .setAddress(request.getAddress())
-                .setPhoneNumber(request.getPhoneNumber())
-                .setEmail(request.getEmail())
-                .setGender(GENDER.valueOf(request.getGender().toUpperCase()))
-                .setIsActive(true)
-                .build();
-        AccountDto accountDto = this.accountBlockingStub.createAccount(createAccountRequest);
-        CreateResponse response = CreateResponse.builder()
-                .name(accountDto.getName())
-                .phoneNumber(accountDto.getPhoneNumber())
-                .email(accountDto.getEmail())
-                .address(accountDto.getAddress())
-                .build();
-        return response;
+        if(request.getGender() == null){
+            CreateAccountRequest createAccountRequest = CreateAccountRequest.newBuilder()
+                    .setName(request.getName())
+                    .setAddress(request.getAddress())
+                    .setPhoneNumber(request.getPhoneNumber())
+                    .setEmail(request.getEmail())
+                    .setIsActive(true)
+                    .build();
+            AccountDto accountDto = this.accountBlockingStub.createAccount(createAccountRequest);
+            CreateResponse response = CreateResponse.builder()
+                    .name(accountDto.getName())
+                    .phoneNumber(accountDto.getPhoneNumber())
+                    .email(accountDto.getEmail())
+                    .address(accountDto.getAddress())
+                    .build();
+            return response;
+        }else{
+            CreateAccountRequest createAccountRequest = CreateAccountRequest.newBuilder()
+                    .setName(request.getName())
+                    .setAddress(request.getAddress())
+                    .setPhoneNumber(request.getPhoneNumber())
+                    .setEmail(request.getEmail())
+                    .setGender(GENDER.valueOf(request.getGender().toUpperCase()))
+                    .setIsActive(true)
+                    .build();
+            AccountDto accountDto = this.accountBlockingStub.createAccount(createAccountRequest);
+            CreateResponse response = CreateResponse.builder()
+                    .name(accountDto.getName())
+                    .phoneNumber(accountDto.getPhoneNumber())
+                    .email(accountDto.getEmail())
+                    .address(accountDto.getAddress())
+                    .build();
+            return response;
+        }
+
+//        AccountDto accountDto = this.accountBlockingStub.createAccount(createAccountRequest);
+//        CreateResponse response = CreateResponse.builder()
+//                .name(accountDto.getName())
+//                .phoneNumber(accountDto.getPhoneNumber())
+//                .email(accountDto.getEmail())
+//                .address(accountDto.getAddress())
+//                .build();
+
     }
 }
